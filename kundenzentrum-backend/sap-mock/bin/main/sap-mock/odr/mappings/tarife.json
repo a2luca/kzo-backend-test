@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/tarife" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": [ { "tarifId": "T1", "tarifBez": "Strom Basis", "grundpreisCent": 990 } ]
+  }
+}

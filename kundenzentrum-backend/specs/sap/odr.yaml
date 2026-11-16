@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: SAP Kundenzentrum ODR (Beispiel)
+  version: 2.3.0
+  description: Beispiel-Spec des SAP-Systems der ODR. Kein echtes SAP.
+paths:
+  /laender:
+    get:
+      operationId: getLaender
+      summary: Alle Länder abrufen
+      description: Gibt die Länderliste aus dem SAP-System der ODR zurück.
+      tags: [Laender]
+      responses:
+        '200':
+          description: Erfolgreich, Liste aller Länder
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Land'
+              example:
+                - landKz: AT
+                  bezeichnung: Österreich
+  /tarife:
+    get:
+      operationId: getTarife
+      summary: Tarife lesen
+      tags: [Tarif]
+      responses:
+        '200':
+          description: Alle buchbaren Tarife
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarif'
+  /abschlaege/{vertragskonto}:
+    get:
+      operationId: getAbschlag
+      summary: Abschlagsplan eines Vertragskontos
+      tags: [Abschlag]
+      parameters:
+        - name: vertragskonto
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Der aktuelle Abschlag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Abschlag'
+        '404':
+          description: Vertragskonto nicht gefunden
+components:
+  schemas:
+    Land:
+      type: object
+      description: Länderstammsatz (ODR)
+      required: [landKz, bezeichnung]
+      properties:
+        landKz:
+          type: string
+          description: Länderschlüssel nach ISO 3166-1 alpha-2
+          example: AT
+        bezeichnung:
+          type: string
+          description: Bezeichnung in Landessprache
+          example: Österreich
+    Tarif:
+      type: object
+      required: [tarifId, tarifBez, grundpreisCent]
+      properties:
+        tarifId:
+          type: string
+          example: T1
+        tarifBez:
+          type: string
+          example: Strom Basis
+        grundpreisCent:
+          type: integer
+          format: int64
+          description: Grundpreis pro Monat in Cent
+          example: 990
+    Abschlag:
+      type: object
+      required: [betragCent, faelligkeit, rhythmus]
+      properties:
+        betragCent:
+          type: integer
+          format: int64
+          example: 8500
+        faelligkeit:
+          type: string
+          format: date
+          example: '2026-12-01'
+        rhythmus:
+          type: string
+          enum: [MONATLICH, QUARTALSWEISE, JAEHRLICH]

@@ -1,0 +1,11 @@
+{
+  "request": { "method": "GET", "url": "/hausanschluesse/4711" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "anschlussNr": "4711", "strasse": "Musterweg", "hausNr": "1",
+      "plz": "12345", "ort": "Musterstadt", "statusKz": "B"
+    }
+  }
+}

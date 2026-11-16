@@ -1,0 +1,5 @@
+{
+  "priority": 1,
+  "request": { "method": "GET", "url": "/abschlaege/UNBEKANNT" },
+  "response": { "status": 404 }
+}

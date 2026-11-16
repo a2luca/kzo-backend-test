@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "urlPathPattern": "/abschlaege/[^/]+" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "betragCent": 8500, "faelligkeit": "2026-12-01", "rhythmus": "MONATLICH" }
+  }
+}

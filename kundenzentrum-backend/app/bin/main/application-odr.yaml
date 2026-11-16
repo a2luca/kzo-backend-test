@@ -1,0 +1,9 @@
+kundenzentrum:
+  mandant: odr
+  sap:
+    base-url: http://localhost:9082
+    user: kuze-odr
+    password: geheim
+
+server:
+  port: 8082

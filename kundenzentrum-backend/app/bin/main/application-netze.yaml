@@ -1,0 +1,9 @@
+kundenzentrum:
+  mandant: netze
+  sap:
+    base-url: http://localhost:9081
+    user: kuze-netze
+    password: geheim
+
+server:
+  port: 8081

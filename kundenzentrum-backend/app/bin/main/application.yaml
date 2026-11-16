@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: kundenzentrum-backend
+  mvc:
+    problemdetails:
+      enabled: false
+# Kein Mandant hier: Ohne Profil "netze" oder "odr" bricht der Start ab (MandantPruefung).

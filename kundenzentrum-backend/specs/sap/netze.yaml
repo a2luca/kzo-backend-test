@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: SAP Kundenzentrum Netze (Beispiel)
+  version: 1.0.0
+  description: Beispiel-Spec des SAP-Systems der Netze. Kein echtes SAP.
+paths:
+  /laender:
+    get:
+      operationId: getLaender
+      summary: Länderliste
+      description: Liefert alle Länder, die im SAP der Netze gepflegt sind.
+      tags: [Laender]
+      responses:
+        '200':
+          description: Liste der Länder (Netze)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Land'
+              example:
+                - landKz: DE
+                  bezeichnung: Deutschland
+  /hausanschluesse/{anschlussNr}:
+    get:
+      operationId: getHausanschluss
+      summary: Hausanschluss lesen
+      tags: [Hausanschluss]
+      parameters:
+        - name: anschlussNr
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Der Hausanschluss
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hausanschluss'
+        '404':
+          description: Hausanschluss nicht gefunden
+  /abschlaege/{vertragskonto}:
+    get:
+      operationId: getAbschlag
+      summary: Abschlag eines Vertragskontos
+      tags: [Abschlag]
+      parameters:
+        - name: vertragskonto
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Der aktuelle Abschlag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Abschlag'
+        '404':
+          description: Vertragskonto nicht gefunden
+components:
+  schemas:
+    Land:
+      type: object
+      description: Ein Land laut SAP-Customizing der Netze.
+      required: [landKz, bezeichnung]
+      properties:
+        landKz:
+          type: string
+          description: ISO-Ländercode
+          example: DE
+        bezeichnung:
+          type: string
+          description: Name des Landes
+          example: Deutschland
+    Hausanschluss:
+      type: object
+      required: [anschlussNr, strasse, hausNr, plz, ort, statusKz]
+      properties:
+        anschlussNr:
+          type: string
+          example: '4711'
+        strasse:
+          type: string
+          example: Musterweg
+        hausNr:
+          type: string
+          example: '1'
+        plz:
+          type: string
+          example: '12345'
+        ort:
+          type: string
+          example: Musterstadt
+        statusKz:
+          type: string
+          description: B = in Betrieb, P = in Planung, S = stillgelegt
+          enum: [B, P, S]
+    Abschlag:
+      type: object
+      required: [betrag, faelligAm]
+      properties:
+        betrag:
+          type: number
+          format: double
+          example: 85.00
+        faelligAm:
+          type: string
+          format: date
+          example: '2026-12-01'

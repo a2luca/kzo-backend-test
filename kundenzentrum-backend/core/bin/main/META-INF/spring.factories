@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=de.firma.kuze.mandant.MandantPruefung
+org.springframework.boot.diagnostics.FailureAnalyzer=de.firma.kuze.mandant.MandantFehltAnalyse
