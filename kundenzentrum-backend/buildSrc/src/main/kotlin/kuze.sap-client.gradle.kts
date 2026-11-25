@@ -4,21 +4,12 @@
 // Anwendung im Modul:
 //   plugins { id("kuze.sap-client") }
 //   sapClient { teilSpec = "common.yaml"; paket = "de.firma.kuze.sap.common.client" }
+import de.firma.kuze.sapclient.SapClientExtension
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
     id("kuze.java-conventions")
     id("org.openapi.generator")
-}
-
-val libs = the<VersionCatalogsExtension>().named("libs")
-
-interface SapClientExtension {
-    /** Dateiname der Teil-Spec, z. B. "common.yaml". */
-    val teilSpec: Property<String>
-
-    /** Basis-Package des Clients; API-Klassen landen in ".api", Modelle in ".model". */
-    val paket: Property<String>
 }
 
 val sapClient = extensions.create<SapClientExtension>("sapClient")
@@ -80,12 +71,11 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("jakarta.annotation:jakarta.annotation-api")
 
-    // Mapper zwischen generierten SAP-Klassen und den DTOs aus dem Core
-    implementation(libs.findLibrary("mapstruct").get())
-    annotationProcessor(libs.findLibrary("mapstruct-processor").get())
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation(libs.findLibrary("wiremock").get())
+
+    // mapstruct, mapstruct-processor und wiremock kommen aus dem Versions-Katalog und werden darum
+    // vom zentralen build.gradle.kts hinzugefügt (siehe dort), nicht hier: Module ohne eigene
+    // build.gradle.kts bekommen keine Typesafe-Version-Catalog-Extension.
 }
 
 tasks.compileJava {
